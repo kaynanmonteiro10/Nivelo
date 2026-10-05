@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Brand from "./brand";
 import MobileMenu from "./mobile-menu";
+import ThemeControl from "./theme-control";
 import { PersonalizationProvider } from "./personalization";
 import { articles } from "@/lib/data";
 import "@fontsource/manrope/latin-500.css";
@@ -28,7 +29,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var t=localStorage.getItem('nivelo-theme');if(t==='dark'||t==='light'||t==='system')document.documentElement.dataset.theme=t;}catch(e){}`,
+          }}
+        />
+      </head>
       <body>
         <a className="skip" href="#conteudo">
           Pular para o conteúdo
@@ -42,6 +50,7 @@ export default function RootLayout({
             <Link className="partner-link" href="/sobre#fazer-parte">
               Sua empresa na Nivelo <span>→</span>
             </Link>
+            <ThemeControl />
             <MobileMenu />
           </div>
           <div className="nav-line">

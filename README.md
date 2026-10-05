@@ -45,3 +45,9 @@ No protótipo administrativo, os campos de formato, etiquetas e prioridade de ca
 `npm test` executa os testes dos algoritmos e da separação entre subtítulos e parágrafos. Use Node.js 22.18+ ou 24 para executar os testes TypeScript diretamente.
 
 URLs de SEO usam `SITE_URL`, o domínio de produção informado pela Vercel ou o endereço atual da Nivelo, nessa ordem.
+
+## Aparência
+
+O tema segue `prefers-color-scheme` por padrão e acompanha mudanças do sistema sem recarregar a página. O seletor no cabeçalho oferece Automático, Claro e Escuro. A escolha explícita fica no navegador em `nivelo-theme` e é aplicada antes da primeira renderização visível. No celular, o controle aparece como um ícone ao lado do menu.
+
+A identidade mantém os azuis da Nivelo, com paletas próprias para fundo, texto, superfícies, formulários e estados. As fotografias usam proporções horizontais e cantos suaves, preservando a estrutura editorial.
