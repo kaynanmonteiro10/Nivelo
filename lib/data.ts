@@ -30,6 +30,9 @@ export type Article = {
   status: string;
   published_at: string;
   updated_at: string;
+  kind?: "news" | "interview" | "guide";
+  tags?: string[];
+  editorial_priority?: number;
 };
 const photos: Record<string, string> = {
   "photo-1600210492486-724fe5c67fb0": "/images/casa-raiz.jpg",
@@ -182,6 +185,14 @@ const companyData: Company[] = companySeeds.map(
 );
 const articleData: Article[] = articleSeeds.map((a, i) => ({
   id: i + 1,
+  kind: "guide",
+  tags: [
+    ["decoração", "casa"],
+    ["alimentação", "sazonalidade"],
+    ["rotina", "cuidado"],
+    ["projeto", "reforma"],
+  ][i],
+  editorial_priority: 1,
   slug: a[0] as string,
   title: a[1] as string,
   excerpt: a[2] as string,
@@ -194,6 +205,211 @@ const articleData: Article[] = articleSeeds.map((a, i) => ({
   published_at: `2026-10-0${5 - i}T12:00:00.000Z`,
   updated_at: `2026-10-0${5 - i}T12:00:00.000Z`,
 }));
+const newsroomSeeds: Omit<Article, "status" | "author" | "updated_at">[] = [
+  {
+    id: 5,
+    slug: "casa-raiz-ceramica-local",
+    title: "Casa Raiz abre espaço para a cerâmica de pequenos produtores",
+    excerpt:
+      "A nova seleção reúne objetos do dia a dia e coloca a origem de cada peça no centro da conversa.",
+    category: "Casa & decoração",
+    company_id: 1,
+    image: "/images/ceramica.jpg",
+    kind: "news",
+    tags: ["cerâmica", "decoração", "casa"],
+    editorial_priority: 5,
+    published_at: "2026-10-05T13:00:00.000Z",
+    content: `Esta notícia é um exemplo fictício para demonstrar o portal. A Casa Raiz apresenta, neste cenário, uma seleção dedicada a peças de cerâmica produzidas em pequenos ateliês.
+
+## O que muda na seleção
+Vasos, recipientes e objetos para a mesa passam a ser apresentados ao lado de informações sobre materiais e processos. A proposta do exemplo é mostrar como uma novidade comercial pode ser contada com contexto.
+
+## O que perguntar antes de escolher
+Verifique se a peça pode entrar em contato com alimentos, quais cuidados exige e como foi produzida. Aparência artesanal não informa, por si só, a segurança ou a resistência de um objeto.
+
+## Da novidade à descoberta
+A página da empresa reúne sua proposta e o tipo de produto que oferece. Como se trata de uma demonstração, esta matéria não anuncia uma coleção disponível para compra.`,
+  },
+  {
+    id: 6,
+    slug: "mesa-aberta-menu-estacao",
+    title: "Mesa Aberta apresenta um menu que acompanha a estação",
+    excerpt:
+      "No restaurante do exemplo, disponibilidade de ingredientes orienta novas combinações para o almoço.",
+    category: "Gastronomia",
+    company_id: 2,
+    image: "/images/mesa-aberta.jpg",
+    kind: "news",
+    tags: ["alimentação", "sazonalidade", "restaurante"],
+    editorial_priority: 4,
+    published_at: "2026-10-05T12:30:00.000Z",
+    content: `Este é um exemplo fictício de notícia de empresa. Neste cenário editorial, o Mesa Aberta renova seu menu a partir de ingredientes disponíveis na estação.
+
+## Como nasce uma mudança no menu
+A seleção leva em conta oferta, conservação e possibilidades de preparo. Menus sazonais podem variar entre regiões e não garantem, sozinhos, menor preço ou impacto ambiental.
+
+## Informação também faz parte do serviço
+Além do prato, o visitante precisa conhecer ingredientes e opções de substituição. Restrições e alergias devem ser conversadas diretamente com a equipe antes do pedido.
+
+## O que conferir na visita
+Consulte o menu atualizado, os horários e as condições de reserva. As informações desta demonstração não representam uma oferta real.`,
+  },
+  {
+    id: 7,
+    slug: "botanica-encontros-rotina",
+    title: "Botânica propõe encontros sobre pausas e rotina",
+    excerpt:
+      "A agenda ilustrativa reúne conversas sobre descanso e escolhas possíveis no dia a dia.",
+    category: "Bem-estar",
+    company_id: 3,
+    image: "/images/botanica.jpg",
+    kind: "news",
+    tags: ["rotina", "cuidado", "descanso"],
+    editorial_priority: 3,
+    published_at: "2026-10-04T14:00:00.000Z",
+    content: `Esta agenda é fictícia e integra a demonstração da Nivelo. No exemplo, a Botânica organiza encontros para conversar sobre rotina e descanso.
+
+## Uma conversa sem fórmulas prontas
+As atividades ilustram a proposta de ouvir diferentes experiências. A intenção é tratar pausas como uma possibilidade, sem prometer benefícios universais.
+
+## O que uma agenda precisa informar
+Antes de participar de um encontro real, confira quem conduz a atividade, a acessibilidade do espaço, custos e condições de inscrição.
+
+## Informação não substitui atendimento
+Questões de saúde precisam de avaliação profissional. Os encontros desta matéria não estão abertos para inscrição e não constituem tratamento.`,
+  },
+  {
+    id: 8,
+    slug: "forma-studio-espacos-compactos",
+    title: "Forma Studio volta o olhar para os espaços compactos",
+    excerpt:
+      "O projeto ilustrativo começa pelas necessidades da rotina antes de discutir metros quadrados e acabamentos.",
+    category: "Arquitetura",
+    company_id: 4,
+    image: "/images/forma-studio.jpg",
+    kind: "news",
+    tags: ["projeto", "reforma", "espaço"],
+    editorial_priority: 3,
+    published_at: "2026-10-04T12:00:00.000Z",
+    content: `Este é um exemplo fictício de notícia. No cenário apresentado, o Forma Studio dedica uma série de estudos a ambientes compactos.
+
+## Entender o uso antes de desenhar
+As primeiras perguntas envolvem circulação, armazenamento, iluminação e quantas pessoas usam o espaço. Soluções de projeto precisam responder à rotina, não apenas à fotografia.
+
+## Cada imóvel tem condições próprias
+Paredes, instalações e regras de condomínio podem limitar mudanças. A avaliação técnica é necessária antes de assumir que uma solução vista em outro projeto pode ser repetida.
+
+## Um estudo é um ponto de partida
+O conteúdo apresenta uma possibilidade editorial, não um serviço ou projeto anunciado pela empresa real. Conheça o perfil demonstrativo para explorar sua proposta.`,
+  },
+  {
+    id: 9,
+    slug: "escolher-ceramica-dia-a-dia",
+    title: "Cerâmica para o dia a dia: o que observar além da aparência",
+    excerpt:
+      "Uso, manutenção e informação sobre o material ajudam a fazer uma escolha mais consciente.",
+    category: "Casa & decoração",
+    company_id: 1,
+    image: "/images/casa-detalhes.jpg",
+    kind: "guide",
+    tags: ["cerâmica", "casa", "decoração"],
+    editorial_priority: 0,
+    published_at: "2026-10-03T14:00:00.000Z",
+    content: `Uma peça de cerâmica pode ser decorativa ou ter uma função prática. Entender essa diferença é o primeiro passo antes de escolher.
+
+## Comece pela finalidade
+Para alimentos, confirme com o fabricante se a peça foi produzida para esse uso. Evite deduzir isso apenas pelo formato ou pelo acabamento.
+
+## Conheça os cuidados
+Pergunte sobre lavagem, aquecimento e armazenamento. Uma peça resistente no uso diário ainda pode exigir cuidados específicos.
+
+## Considere o conjunto
+Meça o espaço e compare dimensões. Uma escolha que combina com a sua rotina tende a ser mais útil do que uma compra feita só pela imagem.`,
+  },
+  {
+    id: 10,
+    slug: "perguntas-antes-reservar-mesa",
+    title: "Quatro perguntas para fazer antes de reservar uma mesa",
+    excerpt:
+      "Horário, acessibilidade e restrições alimentares merecem entrar na conversa antes do encontro.",
+    category: "Gastronomia",
+    company_id: 2,
+    image: "/images/mesa-aberta.jpg",
+    kind: "guide",
+    tags: ["restaurante", "alimentação", "reserva"],
+    editorial_priority: 0,
+    published_at: "2026-10-03T12:00:00.000Z",
+    content: `Uma reserva funciona melhor quando as condições do encontro são conhecidas. Perguntas simples podem evitar desencontros.
+
+## Existe tolerância para atrasos?
+Confirme o horário e as regras de chegada. Alguns espaços trabalham com mais de um serviço por noite.
+
+## Como são tratadas as restrições alimentares?
+Informe alergias e pergunte sobre ingredientes e preparo. Uma opção vegetariana não significa ausência de todos os alérgenos.
+
+## O espaço é acessível?
+Pergunte sobre entrada, circulação e banheiros de acordo com as necessidades do grupo.
+
+## Há condições para grupos?
+Consulte limites, cobrança antecipada e cancelamento. As regras precisam estar claras antes de confirmar.`,
+  },
+  {
+    id: 11,
+    slug: "conversa-sobre-descanso",
+    title: "Descanso não precisa virar mais uma meta",
+    excerpt:
+      "Uma conversa ilustrativa sobre o cuidado que cabe na vida real, sem receitas universais.",
+    category: "Bem-estar",
+    company_id: 3,
+    image: "/images/botanica.jpg",
+    kind: "interview",
+    tags: ["rotina", "cuidado", "descanso"],
+    editorial_priority: 0,
+    published_at: "2026-10-02T14:00:00.000Z",
+    content: `Esta conversa é uma simulação editorial, escrita para demonstrar o formato de entrevista. As respostas não foram coletadas de uma pessoa real e não constituem orientação clínica.
+
+## Por que começar pela rotina?
+Porque práticas de cuidado precisam considerar tempo, recursos e responsabilidades. Um conselho genérico pode não fazer sentido para uma pessoa específica.
+
+## Toda pausa precisa ser produtiva?
+Não. Tratar o descanso como uma nova obrigação pode tornar a experiência menos acolhedora. Observar o próprio ritmo pode ser um começo mais possível.
+
+## Quando uma conversa não é suficiente?
+Cansaço persistente, dor e sofrimento merecem atenção profissional. Conteúdo editorial não substitui avaliação de saúde.`,
+  },
+  {
+    id: 12,
+    slug: "ouvir-antes-projetar",
+    title: "Antes do desenho, a escuta: como começa um projeto",
+    excerpt:
+      "Na conversa demonstrativa com o universo do Forma Studio, o ponto de partida é a vida de quem vai usar o espaço.",
+    category: "Arquitetura",
+    company_id: 4,
+    image: "/images/forma-studio.jpg",
+    kind: "interview",
+    tags: ["projeto", "reforma", "espaço"],
+    editorial_priority: 0,
+    published_at: "2026-10-02T12:00:00.000Z",
+    content: `Esta entrevista é fictícia. O formato foi criado para mostrar como a Nivelo pode apresentar a maneira de pensar de uma empresa, sem atribuir declarações a pessoas reais.
+
+## Qual é a primeira pergunta de um projeto?
+Como o espaço é usado hoje e o que precisa mudar. Uma boa conversa ajuda a identificar prioridades antes de discutir estilo.
+
+## Onde entra o orçamento?
+Desde o início. Conhecer limites ajuda a escolher materiais, etapas e soluções compatíveis com o projeto.
+
+## O que o visitante deve levar para a primeira conversa?
+Medidas disponíveis, referências e uma lista de dificuldades da rotina podem ajudar. A documentação necessária varia de acordo com o imóvel e o serviço.`,
+  },
+];
+articleData.push(
+  ...newsroomSeeds.map((a) => ({
+    ...a,
+    status: "published",
+    author: "Redação Nivelo",
+    updated_at: a.published_at,
+  })),
+);
 export function companies(_includeDrafts = false) {
   return companyData;
 }

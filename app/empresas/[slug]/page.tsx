@@ -1,3 +1,4 @@
+import { siteUrl } from "@/lib/site";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { companyBySlug, articles } from "@/lib/data";
@@ -41,7 +42,7 @@ export default async function CompanyPage({
           name: c.name,
           description: c.tagline,
           image: c.image,
-          url: `${process.env.SITE_URL || "http://localhost:3000"}/empresas/${c.slug}`,
+          url: `${siteUrl}/empresas/${c.slug}`,
           address: {
             "@type": "PostalAddress",
             streetAddress: c.address,

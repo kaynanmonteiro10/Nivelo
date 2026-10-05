@@ -1,7 +1,10 @@
+import { siteUrl } from "@/lib/site";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Brand from "./brand";
 import MobileMenu from "./mobile-menu";
+import { PersonalizationProvider } from "./personalization";
+import { articles } from "@/lib/data";
 import "@fontsource/manrope/latin-500.css";
 import "@fontsource/manrope/latin-600.css";
 import "@fontsource/manrope/latin-800.css";
@@ -10,13 +13,13 @@ import "@fontsource/dm-sans/latin-500.css";
 import "@fontsource/dm-sans/latin-700.css";
 import "./globals.css";
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.SITE_URL || "http://localhost:3000"),
+  metadataBase: new URL(siteUrl),
   title: {
-    default: "Nivelo — boas histórias, bons encontros",
+    default: "Nivelo — empresas em pauta",
     template: "%s | Nivelo",
   },
   description:
-    "Descubra empresas, ideias e conteúdos úteis para o seu dia a dia. Um novo olhar para os negócios que fazem parte da sua vida.",
+    "Notícias de empresas, entrevistas e guias úteis. Descubra os negócios, as ideias e as pessoas que fazem acontecer.",
   openGraph: { siteName: "Nivelo", locale: "pt_BR", type: "website" },
 };
 export default function RootLayout({
@@ -35,7 +38,7 @@ export default function RootLayout({
             <Link className="logo" href="/" aria-label="Nivelo, início">
               <Brand />
             </Link>
-            <span className="brand-note">BOAS HISTÓRIAS. BONS ENCONTROS.</span>
+            <span className="brand-note">NEGÓCIOS. HISTÓRIAS. INFORMAÇÃO.</span>
             <Link className="partner-link" href="/sobre#fazer-parte">
               Sua empresa na Nivelo <span>→</span>
             </Link>
@@ -46,16 +49,20 @@ export default function RootLayout({
               <div className="nav-links">
                 <Link href="/">Início</Link>
                 <Link href="/empresas">Explore empresas</Link>
-                <Link href="/artigos">Histórias & ideias</Link>
+                <Link href="/artigos">Notícias & conteúdos</Link>
                 <Link href="/sobre">Sobre a Nivelo</Link>
               </div>
-              <Link className="nav-search" href="/empresas">
+              <Link className="nav-search" href="/buscar">
                 Buscar <SearchIcon />
               </Link>
             </nav>
           </div>
         </header>
-        <main id="conteudo">{children}</main>
+        <PersonalizationProvider
+          items={articles().map((a) => ({ ...a, content: "" }))}
+        >
+          <main id="conteudo">{children}</main>
+        </PersonalizationProvider>
         <footer className="footer">
           <div className="wrap footer-main">
             <div>
@@ -71,7 +78,7 @@ export default function RootLayout({
             <div>
               <span className="eyebrow">EXPLORE</span>
               <Link href="/empresas">Encontre uma empresa</Link>
-              <Link href="/artigos">Histórias & ideias</Link>
+              <Link href="/artigos">Notícias & conteúdos</Link>
               <Link href="/sobre">Conheça a Nivelo</Link>
             </div>
             <div>

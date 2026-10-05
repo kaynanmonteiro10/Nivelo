@@ -1,4 +1,6 @@
+import { siteUrl } from "@/lib/site";
 import Link from "next/link";
+import { relatedArticles, articleKind } from "@/lib/discovery";
 import { contentBlocks } from "@/lib/editorial.mjs";
 import { notFound } from "next/navigation";
 import { articleBySlug, companies, articles } from "@/lib/data";
@@ -42,15 +44,14 @@ export default async function ArticlePage({
     (block) => block.type === "heading",
   );
   const c = companies().find((c) => c.id === a.company_id);
-  const related = articles()
-    .filter((b) => b.id !== a.id)
-    .slice(0, 3);
+  const related = relatedArticles(a, articles());
   return (
     <>
       <JsonLd
         data={{
           "@context": "https://schema.org",
-          "@type": "Article",
+          "@type": a.kind === "news" ? "NewsArticle" : "Article",
+          genre: articleKind(a),
           headline: a.title,
           description: a.excerpt,
           image: a.image,
@@ -58,14 +59,14 @@ export default async function ArticlePage({
           dateModified: a.updated_at,
           author: { "@type": "Organization", name: a.author },
           publisher: { "@type": "Organization", name: "Nivelo" },
-          mainEntityOfPage: `${process.env.SITE_URL || "http://localhost:3000"}/artigos/${a.slug}`,
+          mainEntityOfPage: `${siteUrl}/artigos/${a.slug}`,
         }}
       />
       <div className="wrap page-space">
         <div className="breadcrumb">
           <Link href="/">Início</Link>
           <span>/</span>
-          <Link href="/artigos">Histórias & ideias</Link>
+          <Link href="/artigos">Notícias & conteúdos</Link>
           <span>/</span>
           {a.category}
         </div>
@@ -76,6 +77,10 @@ export default async function ArticlePage({
           >
             {a.category}
           </Link>
+          <div className="article-format">
+            <span>{articleKind(a)}</span>
+            <span>Conteúdo de demonstração</span>
+          </div>
           <h1>{a.title}</h1>
           <p>{a.excerpt}</p>
           <div className="byline">
@@ -123,9 +128,9 @@ export default async function ArticlePage({
             <div className="editorial-disclosure">
               <span className="eyebrow">SOBRE ESTE CONTEÚDO</span>
               <p>
-                Produção editorial da Nivelo relacionada ao universo de{" "}
-                {c?.name}. A empresa integra o portal; o conteúdo tem finalidade
-                informativa.
+                Exemplo editorial da Nivelo relacionado ao universo de {c?.name}
+                . Empresa fictícia do portal. Notícias e entrevistas são
+                ilustrativas; guias têm finalidade informativa.
               </p>
             </div>
           </article>
@@ -141,7 +146,7 @@ export default async function ArticlePage({
         {related.length > 0 && (
           <section className="related-section">
             <SectionHeading
-              title="Continue sua descoberta."
+              title="Para entender mais sobre o assunto."
               href="/artigos"
               link="Todas as histórias"
             />

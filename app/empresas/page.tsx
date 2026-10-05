@@ -1,3 +1,4 @@
+import { searchCompanies } from "@/lib/discovery";
 import { companies } from "@/lib/data";
 import { CompanyCard } from "../components";
 import Link from "next/link";
@@ -14,30 +15,10 @@ export default async function Directory({
   const p = await searchParams;
   const all = companies();
   const categories = [...new Set(all.map((c) => c.category))];
-  const normalize = (s: string) =>
-    s
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .toLowerCase();
-  const filtered = all.filter(
-    (c) =>
-      (!p.categoria || c.category === p.categoria) &&
-      (!p.local ||
-        normalize(c.city + " " + c.neighborhood).includes(
-          normalize(p.local),
-        )) &&
-      (!p.q ||
-        normalize(
-          [
-            c.name,
-            c.category,
-            c.city,
-            c.neighborhood,
-            c.offerings,
-            c.description,
-          ].join(" "),
-        ).includes(normalize(p.q))),
-  );
+  const filtered = searchCompanies(all, p.q, {
+    category: p.categoria,
+    location: p.local,
+  });
   return (
     <div className="wrap page-space">
       <div className="breadcrumb">

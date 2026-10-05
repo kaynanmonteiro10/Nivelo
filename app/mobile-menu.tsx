@@ -41,12 +41,12 @@ export default function MobileMenu() {
             Explore empresas
           </Link>
           <Link href="/artigos" onClick={() => setOpen(false)}>
-            Histórias & ideias
+            Notícias & conteúdos
           </Link>
           <Link href="/sobre" onClick={() => setOpen(false)}>
             Sobre a Nivelo
           </Link>
-          <Link href="/empresas" onClick={() => setOpen(false)}>
+          <Link href="/buscar" onClick={() => setOpen(false)}>
             Buscar no portal →
           </Link>
         </nav>

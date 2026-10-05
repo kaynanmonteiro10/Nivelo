@@ -1,7 +1,8 @@
+import { siteUrl } from "@/lib/site";
 import type { MetadataRoute } from "next";
 import { companies, articles } from "@/lib/data";
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = process.env.SITE_URL || "http://localhost:3000";
+  const base = siteUrl;
   return [
     { url: base },
     { url: `${base}/empresas` },

@@ -1,10 +1,11 @@
-import { articles } from "@/lib/data";
+import { articles, companies } from "@/lib/data";
+import { searchArticles } from "@/lib/discovery";
 import { ArticleCard } from "../components";
 import Link from "next/link";
 export const metadata = {
-  title: "Histórias & ideias",
+  title: "Notícias & conteúdos",
   description:
-    "Conteúdos úteis sobre casa, gastronomia, bem-estar e outros assuntos que fazem parte da sua vida.",
+    "Notícias de empresas, entrevistas e guias úteis, organizados por editoria.",
 };
 export default async function Stories({
   searchParams,
@@ -14,54 +15,81 @@ export default async function Stories({
   const p = await searchParams;
   const all = articles();
   const categories = [...new Set(all.map((a) => a.category))];
-  const normalize = (s: string) =>
-    s
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .toLowerCase();
-  const filtered = all.filter(
-    (a) =>
-      (!p.categoria || a.category === p.categoria) &&
-      (!p.q ||
-        normalize(a.title + " " + a.excerpt + " " + a.content).includes(
-          normalize(p.q),
-        )),
-  );
+  const filtered = searchArticles(all, p.q, {
+    category: p.categoria,
+    kind: p.tipo,
+    companies: companies(),
+  });
   return (
-    <div className="wrap page-space">
+    <div className="wrap page-space article-directory">
       <div className="breadcrumb">
         <Link href="/">Início</Link>
-        <span>/</span>Histórias & ideias
+        <span>/</span>Notícias & conteúdos
       </div>
-      <span className="eyebrow">CONHECIMENTO QUE ABRE PORTAS</span>
-      <h1 className="page-title">
-        Uma boa história.
-        <br />
-        <em>Uma nova perspectiva.</em>
-      </h1>
+      <span className="eyebrow">INFORMAÇÃO COM CONTEXTO</span>
+      <h1 className="page-title">{p.categoria || "Notícias & conteúdos"}</h1>
       <p className="page-description">
-        Respostas, referências e descobertas para fazer escolhas com mais
-        informação.
+        Novidades dos negócios, conversas e guias para entender melhor cada
+        assunto.
       </p>
-      <form className="search-form story-search">
+      <nav className="content-types" aria-label="Tipos de conteúdo">
+        {[
+          ["", "Todos"],
+          ["news", "Notícias"],
+          ["interview", "Entrevistas"],
+          ["guide", "Guias"],
+        ].map(([value, label]) => {
+          const query = new URLSearchParams();
+          if (p.categoria) query.set("categoria", p.categoria);
+          if (p.q) query.set("q", p.q);
+          if (value) query.set("tipo", value);
+          return (
+            <Link
+              key={value}
+              aria-current={(p.tipo || "") === value ? "page" : undefined}
+              href={`/artigos?${query.toString()}`}
+            >
+              {label}
+            </Link>
+          );
+        })}
+      </nav>
+      <form className="search-form story-search" action="/artigos">
         <label>
-          Sobre o que você quer ler?
-          <input name="q" defaultValue={p.q} placeholder="Busque um assunto" />
+          Buscar por assunto ou empresa
+          <input
+            name="q"
+            defaultValue={p.q}
+            placeholder="O que você quer descobrir?"
+          />
         </label>
         <label>
-          Assunto
+          Editoria
           <select name="categoria" defaultValue={p.categoria || ""}>
-            <option value="">Todos os assuntos</option>
+            <option value="">Todas as editorias</option>
             {categories.map((c) => (
               <option key={c}>{c}</option>
             ))}
           </select>
         </label>
+        <label>
+          Formato
+          <select name="tipo" defaultValue={p.tipo || ""}>
+            <option value="">Todos os formatos</option>
+            <option value="news">Notícia</option>
+            <option value="interview">Entrevista</option>
+            <option value="guide">Guia</option>
+          </select>
+        </label>
         <button className="button">Buscar →</button>
       </form>
       <div className="result-heading">
-        <span>{filtered.length} histórias para explorar</span>
-        {(p.q || p.categoria) && (
+        <span>
+          {filtered.length}{" "}
+          {filtered.length === 1 ? "publicação" : "publicações"} ·{" "}
+          {p.q ? "Ordenadas por relevância" : "Mais recentes primeiro"}
+        </span>
+        {(p.q || p.categoria || p.tipo) && (
           <Link href="/artigos" className="text-link">
             Limpar filtros ×
           </Link>
@@ -74,8 +102,11 @@ export default async function Stories({
       </div>
       {!filtered.length && (
         <div className="empty">
-          Não encontramos histórias com esses filtros. Experimente outro
-          assunto.
+          <h2>Nenhuma publicação encontrada.</h2>
+          <p>Tente outro assunto ou remova um dos filtros.</p>
+          <Link className="button" href="/artigos">
+            Ver todas as publicações
+          </Link>
         </div>
       )}
     </div>

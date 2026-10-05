@@ -106,6 +106,17 @@ export default function AdminPrototype({
         excerpt: get("excerpt"),
         category: get("category"),
         company_id: Number(get("company_id")),
+        kind: (["news", "interview", "guide"].includes(get("kind"))
+          ? get("kind")
+          : "guide") as Article["kind"],
+        tags: get("tags")
+          .split(",")
+          .map((tag) => tag.trim())
+          .filter(Boolean),
+        editorial_priority: Math.max(
+          0,
+          Math.min(5, Number(get("editorial_priority")) || 0),
+        ),
         content: get("content"),
         image: safeImage(get("image")) || "/placeholder.svg",
         author: get("author"),
@@ -543,6 +554,37 @@ export default function AdminPrototype({
                 label="Assunto"
                 value={currentArticle?.category}
                 required
+              />
+              <label>
+                Formato editorial
+                <select
+                  name="kind"
+                  defaultValue={currentArticle?.kind || "guide"}
+                >
+                  <option value="news">Notícia</option>
+                  <option value="interview">Entrevista</option>
+                  <option value="guide">Guia</option>
+                </select>
+              </label>
+              <label>
+                Prioridade na capa
+                <select
+                  name="editorial_priority"
+                  defaultValue={currentArticle?.editorial_priority || 0}
+                >
+                  <option value="0">Automática</option>
+                  <option value="1">Baixa</option>
+                  <option value="3">Destaque</option>
+                  <option value="4">Destaque alto</option>
+                  <option value="5">Manchete principal</option>
+                </select>
+              </label>
+              <Field
+                name="tags"
+                label="Assuntos relacionados"
+                value={currentArticle?.tags?.join(", ")}
+                note="Separe por vírgulas. Ex.: cerâmica, decoração, casa."
+                wide
               />
               <Field
                 name="author"

@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { contentBlocks } from "@/lib/editorial.mjs";
+import { articleKind, shortDate } from "@/lib/discovery";
+import { companies } from "@/lib/data";
 import type { Article, Company } from "@/lib/data";
 export function ArticleCard({
   article,
@@ -24,10 +26,16 @@ export function ArticleCard({
           <Link href={`/artigos/${article.slug}`}>{article.title}</Link>
         </h3>
         {!compact && <p>{article.excerpt}</p>}
-        <span className="reading">
-          {Math.max(1, Math.ceil(article.content.split(/\s+/).length / 200))}{" "}
-          min de leitura <span>→</span>
-        </span>
+        <div className="card-publication-meta">
+          <span>{articleKind(article)}</span>
+          <time dateTime={article.published_at}>
+            {shortDate(article.published_at)}
+          </time>
+          <span>
+            {Math.max(1, Math.ceil(article.content.split(/\s+/).length / 200))}{" "}
+            min de leitura
+          </span>
+        </div>
       </div>
     </article>
   );
@@ -113,5 +121,20 @@ export function Paragraphs({ text }: { text: string }) {
         ),
       )}
     </>
+  );
+}
+
+export function StoryMeta({ article }: { article: Article }) {
+  const company = companies().find((c) => c.id === article.company_id);
+  return (
+    <div className="story-meta">
+      <span>{article.author}</span>
+      <time dateTime={article.published_at}>
+        {shortDate(article.published_at)}
+      </time>
+      {company && (
+        <Link href={`/empresas/${company.slug}`}>Sobre {company.name}</Link>
+      )}
+    </div>
   );
 }
