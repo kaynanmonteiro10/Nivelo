@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { contentBlocks } from "@/lib/editorial.mjs";
 import type { Article, Company } from "@/lib/data";
 export function ArticleCard({
   article,
@@ -102,16 +103,15 @@ export function JsonLd({ data }: { data: unknown }) {
 export function Paragraphs({ text }: { text: string }) {
   return (
     <>
-      {text
-        .split(/\n\s*\n/)
-        .filter(Boolean)
-        .map((p, i) =>
-          p.startsWith("## ") ? (
-            <h2 key={i}>{p.slice(3)}</h2>
-          ) : (
-            <p key={i}>{p}</p>
-          ),
-        )}
+      {contentBlocks(text).map((block) =>
+        block.type === "heading" ? (
+          <h2 id={block.id} key={block.id}>
+            {block.text}
+          </h2>
+        ) : (
+          <p key={block.id}>{block.text}</p>
+        ),
+      )}
     </>
   );
 }

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Brand from "./brand";
 import { articles, companies } from "@/lib/data";
 import { ArticleCard, CompanyCard, SectionHeading } from "./components";
 export default function Home() {
@@ -55,7 +56,7 @@ export default function Home() {
           )}
           <aside className="side-stories">
             <div className="aside-heading">
-              <span className="eyebrow">NO NOSSO RADAR</span>
+              <span className="eyebrow">MAIS PARA DESCOBRIR</span>
               <span>←</span>
             </div>
             {stories.slice(1, 4).map((a) => (
@@ -101,7 +102,7 @@ export default function Home() {
         </section>
         <section className="editorial-banner">
           <div className="banner-mark">
-            n<span>→</span>
+            <Brand markOnly />
           </div>
           <div>
             <span className="eyebrow">CONTEÚDO QUE APROXIMA</span>
@@ -119,19 +120,6 @@ export default function Home() {
           <Link className="button light" href="/sobre">
             Conheça a Nivelo →
           </Link>
-        </section>
-        <section className="latest-section">
-          <SectionHeading
-            label="PARA LER COM CALMA"
-            title="Ideias para o seu dia a dia."
-            href="/artigos"
-            link="Mais histórias"
-          />
-          <div className="article-grid">
-            {stories.slice(1, 4).map((a) => (
-              <ArticleCard article={a} key={a.id} />
-            ))}
-          </div>
         </section>
       </div>
       <section className="invitation">

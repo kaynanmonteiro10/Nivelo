@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { contentBlocks } from "@/lib/editorial.mjs";
 import { notFound } from "next/navigation";
 import { articleBySlug, companies, articles } from "@/lib/data";
 import {
@@ -37,6 +38,9 @@ export default async function ArticlePage({
   const { slug } = await params;
   const a = articleBySlug(slug);
   if (!a) notFound();
+  const sections = contentBlocks(a.content).filter(
+    (block) => block.type === "heading",
+  );
   const c = companies().find((c) => c.id === a.company_id);
   const related = articles()
     .filter((b) => b.id !== a.id)
@@ -97,7 +101,24 @@ export default async function ArticlePage({
           fetchPriority="high"
         />
         <div className="article-body">
-          <div className="article-prose prose">
+          <article
+            className="article-prose prose"
+            aria-label="Texto da matéria"
+          >
+            {sections.length > 0 && (
+              <details className="article-index">
+                <summary>
+                  Nesta matéria <span>+</span>
+                </summary>
+                <ol>
+                  {sections.map((section) => (
+                    <li key={section.id}>
+                      <a href={`#${section.id}`}>{section.text}</a>
+                    </li>
+                  ))}
+                </ol>
+              </details>
+            )}
             <Paragraphs text={a.content} />
             <div className="editorial-disclosure">
               <span className="eyebrow">SOBRE ESTE CONTEÚDO</span>
@@ -107,16 +128,16 @@ export default async function ArticlePage({
                 informativa.
               </p>
             </div>
-          </div>
-          {c && (
-            <aside className="discover-panel">
-              <span className="eyebrow">DA LEITURA À DESCOBERTA</span>
-              <h3>Conheça quem faz parte desse universo.</h3>
-              <CompanyCard company={c} />
-              <p>Veja o negócio, o que oferece e como encontrá-lo.</p>
-            </aside>
-          )}
+          </article>
         </div>
+        {c && (
+          <aside className="discover-panel">
+            <span className="eyebrow">DA LEITURA À DESCOBERTA</span>
+            <h2>Da ideia ao encontro.</h2>
+            <CompanyCard company={c} />
+            <p>Veja o negócio, o que oferece e como encontrá-lo.</p>
+          </aside>
+        )}
         {related.length > 0 && (
           <section className="related-section">
             <SectionHeading

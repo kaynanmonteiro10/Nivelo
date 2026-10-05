@@ -7,12 +7,13 @@
   unicode-range: U+2190-2199, U+2300-23FF, U+25A0-26FF;
 }
 :root {
-  --navy: #142d43;
-  --ink: #182e42;
-  --muted: #6c7478;
-  --line: #dedfdc;
-  --paper: #fafaf7;
-  --accent: #dbe2ca;
+  --navy: #07164f;
+  --ink: #101d42;
+  --muted: #5d6880;
+  --line: #dfe5f0;
+  --paper: #ffffff;
+  --accent: #dce8ff;
+  --blue: #0054ef;
   --serif: Georgia, "Times New Roman", serif;
 }
 * {
@@ -54,7 +55,7 @@ button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-  outline: 3px solid #859dba;
+  outline: 3px solid #0061ff;
   outline-offset: 4px;
 }
 img {
@@ -86,7 +87,7 @@ em {
   font-weight: 400;
 }
 ::selection {
-  background: #dce4cc;
+  background: #dce8ff;
 }
 .wrap {
   max-width: 1280px;
@@ -128,7 +129,7 @@ em {
   min-height: 47px;
 }
 .button:hover {
-  background: #27465e;
+  background: #0049d8;
 }
 .button.light {
   background: var(--paper);
@@ -136,7 +137,7 @@ em {
   color: var(--ink);
 }
 .button.light:hover {
-  background: #e4e6df;
+  background: #e4ecff;
 }
 .skip {
   position: absolute;
@@ -203,7 +204,7 @@ em {
   font-weight: 500;
 }
 .nav a:hover {
-  color: #67816c;
+  color: #0054ed;
 }
 .nav-search {
   display: flex;
@@ -297,7 +298,7 @@ em {
 }
 .lead-caption .eyebrow {
   font-size: 9px;
-  color: #dbe2ca;
+  color: #dce8ff;
 }
 .lead-caption h2 {
   font-size: 39px;
@@ -311,7 +312,7 @@ em {
   font-size: 12px;
   line-height: 1.65;
   max-width: 420px;
-  color: #e1e4e1;
+  color: #e7efff;
 }
 .lead-more {
   font-size: 10px;
@@ -348,7 +349,7 @@ em {
   display: block;
   position: relative;
   overflow: hidden;
-  background: #e5e7e0;
+  background: #eaf0fc;
 }
 .image-link img {
   height: 100%;
@@ -362,7 +363,7 @@ em {
   letter-spacing: 1.2px;
 }
 .category {
-  color: #526452;
+  color: #0751d9;
 }
 .article-card h3 {
   font-size: 23px;
@@ -491,7 +492,7 @@ em {
 .circle-arrow {
   display: grid;
   place-items: center;
-  border: 1px solid #d3d7d3;
+  border: 1px solid #d5def1;
   height: 31px;
   width: 31px;
   border-radius: 50%;
@@ -533,10 +534,10 @@ em {
   position: absolute;
   top: 0;
   right: -14px;
-  color: #dbe2ca;
+  color: #dce8ff;
 }
 .editorial-banner .eyebrow {
-  color: #c8d4c0;
+  color: #b9d8ff;
   font-size: 8px;
 }
 .editorial-banner h2 {
@@ -547,7 +548,7 @@ em {
   margin: 12px 0;
 }
 .editorial-banner p {
-  color: #bfccd5;
+  color: #c7d7f8;
   font-size: 11px;
   line-height: 1.8;
 }
@@ -581,7 +582,7 @@ em {
   border-top: 1px solid var(--line);
 }
 .invitation {
-  background: #e9ece4;
+  background: #f3f6ff;
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
   padding: 38px 0;
@@ -683,7 +684,7 @@ em {
   display: flex;
   align-items: flex-end;
   gap: 16px;
-  background: #edf0e9;
+  background: #f3f6ff;
   padding: 25px;
   margin: 30px 0;
 }
@@ -699,7 +700,7 @@ em {
 input,
 select,
 textarea {
-  border: 1px solid #d4d9d3;
+  border: 1px solid #cfd9eb;
   background: var(--paper);
   padding: 13px;
   color: var(--ink);
@@ -785,7 +786,7 @@ textarea {
   font-size: 14px;
 }
 .contact-panel {
-  background: #edf0e9;
+  background: #f3f6ff;
   padding: 30px;
   align-self: start;
 }
@@ -796,7 +797,7 @@ textarea {
 }
 .contact-panel > div {
   padding: 20px 0;
-  border-top: 1px solid #d4d9d0;
+  border-top: 1px solid #cfdaed;
 }
 .contact-panel h4 {
   font-size: 12px;
@@ -933,7 +934,7 @@ textarea {
 .about-note > span {
   font-size: 9px;
   letter-spacing: 1.5px;
-  color: #bfccd5;
+  color: #c7d7f8;
 }
 .about-note > h3 {
   font-size: 25px;
@@ -943,7 +944,7 @@ textarea {
   font-weight: 500;
 }
 .join-section {
-  background: #e9ece4;
+  background: #f3f6ff;
   padding: 45px;
   scroll-margin-top: 30px;
 }
@@ -1025,7 +1026,7 @@ textarea {
   display: inline-block;
   padding: 7px 11px;
   border: 1px solid #c9d1c2;
-  color: #526452;
+  color: #0751d9;
   font-size: 9px;
 }
 .stats {
@@ -1203,7 +1204,7 @@ td small {
 }
 .admin-preview {
   padding: 25px;
-  background: #edf0e9;
+  background: #f3f6ff;
   margin-top: 25px;
 }
 .admin-preview h2 {
@@ -1928,5 +1929,872 @@ td small {
   *:before,
   *:after {
     transition: none !important;
+  }
+}
+
+/* Nivelo identity and a calmer, linear reading flow. */
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.logo .brand-symbol {
+  width: 44px;
+  height: 42px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+.logo .brand-word {
+  font-size: 40px;
+  letter-spacing: -2px;
+  margin: 0;
+  line-height: 1;
+  vertical-align: baseline;
+  color: var(--navy);
+}
+.mobile-navigation {
+  display: none;
+}
+.category {
+  color: var(--blue);
+}
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 1.3px;
+}
+.button {
+  background: var(--blue);
+  border-color: var(--blue);
+  font-size: 13px;
+}
+.text-link {
+  font-size: 13px;
+}
+.nav a {
+  font-size: 13px;
+}
+.partner-link {
+  font-size: 12px;
+}
+.brand-note {
+  font-size: 9px;
+}
+.intro {
+  padding: 44px 0 36px;
+}
+.intro-right p {
+  font-size: 15px;
+}
+.intro-right {
+  width: 330px;
+}
+.lead-grid {
+  grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);
+  gap: 40px;
+}
+.lead-photo {
+  height: auto;
+  background: transparent;
+  overflow: visible;
+}
+.lead-photo > img {
+  height: 310px;
+}
+.lead-photo:after {
+  display: none;
+}
+.featured-badge {
+  top: 18px;
+  left: 18px;
+  background: var(--blue);
+  color: white;
+  font-size: 10px;
+}
+.featured-badge > span {
+  background: white;
+}
+.lead-caption {
+  position: static;
+  color: var(--ink);
+  padding: 23px 0 0;
+}
+.lead-caption .eyebrow {
+  color: var(--blue);
+  font-size: 11px;
+}
+.lead-caption h2 {
+  font-size: 34px;
+  font-weight: 600;
+  max-width: 620px;
+  margin: 12px 0;
+}
+.lead-caption p {
+  font-size: 15px;
+  color: var(--muted);
+  max-width: 590px;
+  line-height: 1.75;
+}
+.lead-more {
+  justify-content: flex-start;
+  gap: 15px;
+  font-size: 13px;
+  margin-top: 17px;
+  color: var(--blue);
+}
+.lead-more span {
+  font-size: 20px;
+}
+.aside-heading .eyebrow {
+  font-size: 11px;
+}
+.side-stories .compact {
+  grid-template-columns: 110px 1fr;
+  gap: 20px;
+  padding: 21px 0;
+}
+.compact .image-link {
+  height: 108px;
+}
+.article-info .eyebrow {
+  font-size: 10px;
+}
+.compact h3 {
+  font-size: 18px;
+  line-height: 1.4;
+}
+.reading {
+  font-size: 11px;
+}
+.aside-more {
+  margin-top: 20px;
+  font-size: 13px;
+}
+.category-strip > .eyebrow {
+  font-size: 10px;
+}
+.category-strip a {
+  font-size: 13px;
+}
+.category-strip .all-categories {
+  font-size: 12px;
+}
+.section-heading .eyebrow {
+  font-size: 10px;
+}
+.section-heading .text-link {
+  font-size: 13px;
+}
+.company-card .location {
+  font-size: 11px;
+}
+.company-card > p {
+  font-size: 13px;
+}
+.business-section {
+  padding: 44px 0 50px;
+}
+.editorial-banner {
+  margin-bottom: 48px;
+}
+.editorial-banner .eyebrow {
+  font-size: 10px;
+}
+.editorial-banner p {
+  font-size: 14px;
+}
+.editorial-banner .button {
+  font-size: 12px;
+}
+.banner-mark {
+  width: 98px;
+  padding: 0;
+}
+.banner-mark .brand-symbol {
+  width: 98px;
+  height: 100px;
+  object-fit: contain;
+}
+.article-card .article-info > p {
+  font-size: 14px;
+}
+.invitation .eyebrow {
+  font-size: 10px;
+}
+.invitation p {
+  font-size: 14px;
+}
+.invitation .button {
+  font-size: 13px;
+}
+.footer .logo .brand-word {
+  font-size: 34px;
+}
+.footer .logo .brand-symbol {
+  width: 35px;
+  height: 34px;
+}
+.footer-main > div > a:not(.logo) {
+  font-size: 13px;
+}
+.footer p {
+  font-size: 13px;
+}
+.footer .eyebrow {
+  font-size: 10px;
+}
+.footer .demo-note,
+.footer-bottom {
+  font-size: 11px;
+}
+.breadcrumb {
+  font-size: 12px;
+}
+.company-body .prose {
+  max-width: 65ch;
+}
+.company-body h2 {
+  margin-top: 32px;
+}
+.company-body .prose p {
+  font-size: 17px;
+  color: var(--ink);
+  line-height: 1.85;
+}
+.contact-panel h4 {
+  font-size: 14px;
+}
+.contact-panel p {
+  font-size: 14px;
+}
+.article-header {
+  max-width: 780px;
+  text-align: left;
+  margin: 0 auto 32px;
+}
+.article-header h1 {
+  font-size: 48px;
+  line-height: 1.18;
+}
+.article-header > p {
+  font-size: 19px;
+  line-height: 1.65;
+  margin: 0;
+}
+.byline {
+  justify-content: flex-start;
+  gap: 12px 22px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-top: 1px solid var(--line);
+  padding-top: 20px;
+  margin-top: 24px;
+}
+.article-hero {
+  max-width: 900px;
+  height: 370px;
+  margin: auto;
+}
+.article-body {
+  display: block;
+  max-width: 680px;
+  padding: 36px 0 0;
+  margin: auto;
+}
+.article-prose p {
+  font-size: 19px;
+  line-height: 1.85;
+  color: #26334a;
+  margin-bottom: 26px;
+}
+.article-prose h2 {
+  font-size: 28px;
+  line-height: 1.35;
+  margin: 40px 0 16px;
+  scroll-margin-top: 24px;
+}
+.article-index {
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--blue);
+  padding: 0 22px;
+  margin: 0 0 32px;
+  background: #f8faff;
+}
+.article-index summary {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 600;
+  min-height: 54px;
+  list-style: none;
+}
+.article-index summary::-webkit-details-marker {
+  display: none;
+}
+.article-index[open] summary > span {
+  transform: rotate(45deg);
+}
+.article-index ol {
+  padding: 0 0 10px 20px;
+  margin: 0;
+}
+.article-index li {
+  padding: 6px 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--blue);
+}
+.article-index a:hover {
+  text-decoration: underline;
+}
+.editorial-disclosure p {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--muted);
+}
+.discover-panel {
+  max-width: 680px;
+  margin: 32px auto 45px;
+  padding: 28px;
+  background: #f3f6ff;
+  border-top: 0;
+  border-left: 3px solid var(--blue);
+}
+.discover-panel > h2 {
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.8px;
+  margin: 10px 0 23px;
+}
+.discover-panel .company-card {
+  display: grid;
+  grid-template-columns: 190px 1fr;
+  column-gap: 24px;
+}
+.discover-panel .company-card > .image-link {
+  grid-row: 1/3;
+  height: 160px;
+}
+.discover-panel .company-info {
+  margin-top: 12px;
+  align-self: start;
+}
+.discover-panel .company-card > p {
+  margin-top: 0;
+  align-self: start;
+}
+.discover-panel > p {
+  margin-top: 18px;
+  font-size: 13px;
+}
+.related-section {
+  padding-top: 36px;
+}
+@media (max-width: 1000px) {
+  .category-strip > div {
+    flex-wrap: wrap;
+    gap: 20px 24px;
+  }
+  .lead-grid {
+    grid-template-columns: 1.5fr 1fr;
+    gap: 28px;
+  }
+  .side-stories .compact {
+    grid-template-columns: 85px 1fr;
+    gap: 14px;
+  }
+  .compact h3 {
+    font-size: 16px;
+  }
+  .editorial-banner {
+    gap: 24px;
+  }
+}
+@media (max-width: 800px) {
+  .lead-grid {
+    grid-template-columns: 1fr;
+  }
+  .side-stories {
+    display: block;
+  }
+  .side-stories .compact {
+    grid-template-columns: 120px 1fr;
+  }
+  .compact h3 {
+    font-size: 20px;
+  }
+  .intro-right {
+    width: 270px;
+  }
+  .intro-right p {
+    font-size: 14px;
+  }
+  .editorial-banner .button {
+    margin-left: 122px;
+  }
+  .company-card .image-link {
+    height: 230px;
+  }
+  .section-heading h2 {
+    font-size: 29px;
+  }
+  .article-header h1 {
+    font-size: 43px;
+  }
+}
+@media (max-width: 560px) {
+  .wrap {
+    width: calc(100% - 40px);
+  }
+  .header-top {
+    height: 78px;
+    position: relative;
+    justify-content: space-between;
+  }
+  .logo {
+    gap: 9px;
+  }
+  .logo .brand-word {
+    font-size: 32px;
+    letter-spacing: -1.5px;
+  }
+  .logo .brand-symbol {
+    width: 35px;
+    height: 33px;
+  }
+  .partner-link,
+  .nav-line {
+    display: none;
+  }
+  .header {
+    border-bottom: 1px solid var(--line);
+  }
+  .mobile-navigation {
+    display: block;
+  }
+  .menu-toggle {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    min-width: 75px;
+    border: 0;
+    background: white;
+    color: var(--ink);
+    font-size: 13px;
+  }
+  #mobile-menu {
+    position: absolute;
+    top: 78px;
+    left: -20px;
+    right: -20px;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    box-shadow: 0 14px 24px #07164f15;
+    border-bottom: 1px solid var(--line);
+    padding: 10px 20px 18px;
+  }
+  #mobile-menu a {
+    font-size: 15px;
+    padding: 14px 4px;
+    border-bottom: 1px solid var(--line);
+  }
+  #mobile-menu a:last-child {
+    border: 0;
+    color: var(--blue);
+  }
+  .intro {
+    padding: 30px 0;
+  }
+  .intro h1 {
+    font-size: 35px;
+    line-height: 1.16;
+    margin-top: 12px;
+  }
+  .intro h1 em {
+    font-size: 39px;
+  }
+  .intro .eyebrow {
+    font-size: 10px;
+  }
+  .intro-right {
+    display: block;
+    width: auto;
+    margin-top: 16px;
+  }
+  .intro-right p {
+    font-size: 15px;
+    max-width: 100%;
+    line-height: 1.7;
+  }
+  .intro-right .text-link {
+    font-size: 14px;
+    margin-top: 10px;
+    min-height: 40px;
+    gap: 14px;
+    color: var(--blue);
+  }
+  .lead-photo > img {
+    height: 215px;
+  }
+  .featured-badge {
+    top: 14px;
+    left: 14px;
+    font-size: 9px;
+  }
+  .lead-caption {
+    padding-top: 20px;
+  }
+  .lead-caption .eyebrow {
+    font-size: 10px;
+  }
+  .lead-caption h2 {
+    font-size: 29px;
+    line-height: 1.25;
+    letter-spacing: -0.9px;
+    margin: 10px 0 12px;
+  }
+  .lead-caption p {
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .lead-more {
+    margin-top: 12px;
+    min-height: 44px;
+    font-size: 14px;
+  }
+  .lead-grid {
+    gap: 28px;
+  }
+  .aside-heading {
+    padding: 16px 0 5px;
+  }
+  .aside-heading .eyebrow {
+    font-size: 11px;
+  }
+  .side-stories .compact {
+    grid-template-columns: 94px 1fr;
+    gap: 16px;
+    padding: 19px 0;
+  }
+  .compact .image-link {
+    height: 100px;
+  }
+  .compact h3 {
+    font-size: 17px;
+    line-height: 1.4;
+    max-width: none;
+  }
+  .article-info .eyebrow {
+    font-size: 9px;
+  }
+  .reading {
+    font-size: 11px;
+  }
+  .aside-more {
+    font-size: 14px;
+    min-height: 44px;
+    margin-top: 10px;
+  }
+  .category-strip {
+    padding: 25px 0;
+    margin-top: 28px;
+  }
+  .category-strip > .eyebrow {
+    font-size: 10px;
+    margin-bottom: 16px;
+  }
+  .category-strip > div {
+    display: flex;
+    gap: 10px;
+  }
+  .category-strip a {
+    padding: 11px 13px;
+    border: 1px solid var(--line);
+    gap: 8px;
+    font-size: 12px;
+    min-height: 44px;
+  }
+  .category-symbol {
+    display: none;
+  }
+  .category-strip a > span:last-child {
+    margin: 0;
+  }
+  .category-strip .all-categories {
+    border: 0;
+    padding-left: 0;
+    font-size: 13px;
+    width: 100%;
+    margin: 3px 0 0;
+  }
+  .section-heading {
+    display: block;
+    margin-bottom: 25px;
+  }
+  .section-heading .eyebrow {
+    font-size: 10px;
+    margin-bottom: 10px;
+  }
+  .section-heading h2 {
+    font-size: 28px;
+    max-width: none;
+    line-height: 1.25;
+  }
+  .section-heading .text-link {
+    font-size: 13px;
+    min-height: 44px;
+    margin-top: 6px;
+    gap: 14px;
+    color: var(--blue);
+  }
+  .company-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .company-card {
+    padding-bottom: 25px;
+    border-bottom: 1px solid var(--line);
+  }
+  .company-card .image-link {
+    height: 210px;
+  }
+  .company-card h3 {
+    font-size: 22px;
+    margin-bottom: 7px;
+  }
+  .company-info {
+    margin-top: 18px;
+    align-items: center;
+  }
+  .company-card .location {
+    font-size: 12px;
+  }
+  .company-card > p {
+    font-size: 15px;
+    line-height: 1.7;
+    margin-top: 10px;
+  }
+  .circle-arrow {
+    min-width: 44px;
+    height: 44px;
+    font-size: 20px;
+  }
+  .image-label {
+    font-size: 10px;
+    bottom: 12px;
+    left: 12px;
+    padding: 7px 10px;
+  }
+  .business-section {
+    padding: 34px 0 36px;
+  }
+  .editorial-banner {
+    display: block;
+    padding: 28px 24px;
+    margin-bottom: 36px;
+  }
+  .banner-mark {
+    width: 45px;
+    margin-bottom: 20px;
+  }
+  .banner-mark .brand-symbol {
+    width: 45px;
+    height: 45px;
+  }
+  .editorial-banner .eyebrow {
+    font-size: 10px;
+  }
+  .editorial-banner h2 {
+    font-size: 26px;
+    line-height: 1.3;
+  }
+  .editorial-banner p {
+    font-size: 14px;
+  }
+  .editorial-banner .button {
+    margin: 22px 0 0;
+    font-size: 13px;
+    padding: 13px 17px;
+  }
+  .invitation p {
+    font-size: 14px;
+  }
+  .invitation .button {
+    font-size: 13px;
+  }
+  .invitation .eyebrow {
+    font-size: 10px;
+  }
+  .page-space {
+    padding-top: 22px;
+  }
+  .breadcrumb {
+    font-size: 11px;
+    margin-bottom: 28px;
+    gap: 8px;
+  }
+  .page-title {
+    font-size: 34px;
+    line-height: 1.2;
+  }
+  .page-description {
+    font-size: 15px;
+    line-height: 1.75;
+  }
+  .search-form label {
+    font-size: 12px;
+  }
+  .search-form input,
+  .search-form select {
+    font-size: 16px;
+  }
+  .result-heading {
+    font-size: 12px;
+  }
+  .article-header {
+    margin-bottom: 24px;
+  }
+  .article-header h1 {
+    font-size: 34px;
+    line-height: 1.23;
+    letter-spacing: -0.9px;
+    margin: 13px 0 17px;
+  }
+  .article-header > p {
+    font-size: 17px;
+    line-height: 1.7;
+  }
+  .byline {
+    font-size: 12px;
+    gap: 8px 18px;
+    margin-top: 20px;
+    padding-top: 16px;
+  }
+  .article-hero {
+    height: 220px;
+  }
+  .article-body {
+    padding: 28px 0 0;
+  }
+  .article-prose p {
+    font-size: 18px;
+    line-height: 1.85;
+    margin-bottom: 25px;
+  }
+  .article-prose h2 {
+    font-size: 25px;
+    line-height: 1.4;
+    margin-top: 36px;
+  }
+  .article-index {
+    padding: 0 16px;
+    margin-bottom: 27px;
+  }
+  .article-index summary {
+    min-height: 54px;
+    font-size: 14px;
+  }
+  .article-index li {
+    padding: 9px 0;
+  }
+  .editorial-disclosure p {
+    font-size: 13px;
+  }
+  .discover-panel {
+    padding: 24px 20px;
+    margin: 28px 0 36px;
+    max-width: none;
+  }
+  .discover-panel .company-card {
+    display: block;
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+  .discover-panel .company-card > .image-link {
+    height: 185px;
+  }
+  .discover-panel .company-info {
+    margin: 18px 0 12px;
+  }
+  .discover-panel .company-card > p {
+    margin-top: 10px;
+  }
+  .related-section .article-grid {
+    gap: 0;
+  }
+  .related-section .article-card {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 17px;
+    border-bottom: 1px solid var(--line);
+    padding: 20px 0;
+  }
+  .related-section .article-card > .image-link {
+    height: 100px;
+  }
+  .related-section .article-info {
+    padding-top: 0;
+  }
+  .related-section .article-card h3 {
+    font-size: 17px;
+    line-height: 1.4;
+    margin: 8px 0;
+  }
+  .related-section .article-card .article-info > p {
+    display: none;
+  }
+  .related-section .reading {
+    border-top: 0;
+    padding-top: 0;
+  }
+  .company-title .page-title {
+    font-size: 42px;
+  }
+  .company-title > .location {
+    font-size: 13px;
+    margin: 0 0 24px;
+  }
+  .company-hero {
+    height: 240px;
+  }
+  .company-body {
+    padding: 30px 0;
+    gap: 30px;
+  }
+  .company-body h2 {
+    font-size: 27px;
+  }
+  .company-body .prose p {
+    font-size: 17px;
+  }
+  .contact-panel {
+    padding: 25px;
+  }
+  .offerings li {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .footer-main {
+    gap: 30px 20px;
+  }
+  .footer-main > div > a:not(.logo) {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .footer .eyebrow {
+    font-size: 10px;
+  }
+  .footer-bottom {
+    display: block;
+    font-size: 11px;
+    line-height: 1.8;
+  }
+  .footer-bottom span {
+    display: block;
   }
 }

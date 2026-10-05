@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Brand from "./brand";
+import MobileMenu from "./mobile-menu";
 import "@fontsource/manrope/latin-500.css";
 import "@fontsource/manrope/latin-600.css";
 import "@fontsource/manrope/latin-800.css";
@@ -31,12 +33,13 @@ export default function RootLayout({
         <header className="header">
           <div className="header-top wrap">
             <Link className="logo" href="/" aria-label="Nivelo, início">
-              nivelo<span>®</span>
+              <Brand />
             </Link>
             <span className="brand-note">BOAS HISTÓRIAS. BONS ENCONTROS.</span>
             <Link className="partner-link" href="/sobre#fazer-parte">
               Sua empresa na Nivelo <span>→</span>
             </Link>
+            <MobileMenu />
           </div>
           <div className="nav-line">
             <nav className="wrap nav" aria-label="Navegação principal">
@@ -57,7 +60,7 @@ export default function RootLayout({
           <div className="wrap footer-main">
             <div>
               <Link className="logo" href="/">
-                nivelo<span>®</span>
+                <Brand />
               </Link>
               <p>
                 Um novo olhar para os negócios.
