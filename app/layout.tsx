@@ -1,3 +1,4 @@
+import { isLive } from "@/lib/supabase/config";
 import { siteUrl } from "@/lib/site";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -5,7 +6,7 @@ import Brand from "./brand";
 import MobileMenu from "./mobile-menu";
 import ThemeControl from "./theme-control";
 import { PersonalizationProvider } from "./personalization";
-import { articles } from "@/lib/data";
+import { articles } from "@/lib/content";
 import "@fontsource/manrope/latin-500.css";
 import "@fontsource/manrope/latin-600.css";
 import "@fontsource/manrope/latin-800.css";
@@ -13,6 +14,7 @@ import "@fontsource/dm-sans/latin-400.css";
 import "@fontsource/dm-sans/latin-500.css";
 import "@fontsource/dm-sans/latin-700.css";
 import "./globals.css";
+export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
@@ -23,7 +25,7 @@ export const metadata: Metadata = {
     "Notícias de empresas, entrevistas e guias úteis. Descubra os negócios, as ideias e as pessoas que fazem acontecer.",
   openGraph: { siteName: "Nivelo", locale: "pt_BR", type: "website" },
 };
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -68,7 +70,7 @@ export default function RootLayout({
           </div>
         </header>
         <PersonalizationProvider
-          items={articles().map((a) => ({ ...a, content: "" }))}
+          items={(await articles()).map((a) => ({ ...a, content: "" }))}
         >
           <main id="conteudo">{children}</main>
         </PersonalizationProvider>
@@ -94,11 +96,11 @@ export default function RootLayout({
               <span className="eyebrow">PARA EMPRESAS</span>
               <Link href="/sobre#fazer-parte">Faça parte da Nivelo →</Link>
               <Link href="/admin">Área administrativa</Link>
-              <p className="demo-note">
+              {!isLive() && <p className="demo-note">
                 Edição de demonstração.
                 <br />
                 Empresas e conteúdos ilustrativos.
-              </p>
+              </p>}
             </div>
           </div>
           <div className="wrap footer-bottom">

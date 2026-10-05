@@ -1,3 +1,4 @@
+import { isLive } from "@/lib/supabase/config";
 import Link from "next/link";
 export const metadata = {
   title: "Sobre a Nivelo",
@@ -67,11 +68,10 @@ export default function About() {
           relevantes para o seu público.
         </p>
         <p>
-          Esta é a versão de demonstração da Nivelo. O canal de atendimento
-          comercial será informado quando o portal abrir para novas empresas.
+          {!isLive() && "Esta é a versão de demonstração da Nivelo. "}O canal de atendimento comercial será informado quando o portal abrir para novas empresas.
         </p>
         <Link className="button" href="/empresas">
-          Conheça os espaços de demonstração →
+          {isLive() ? "Conheça as empresas do portal →" : "Conheça os espaços de demonstração →"}
         </Link>
       </section>
     </div>

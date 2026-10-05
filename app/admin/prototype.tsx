@@ -1,6 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { saveRecord } from "./actions";
+import { signOut } from "./login/actions";
 import type { Company, Article } from "@/lib/data";
 import {
   slugify,
@@ -9,6 +12,7 @@ import {
   safeUrl,
 } from "@/lib/editorial.mjs";
 type Props = {
+  live?: boolean;
   initialCompanies: Company[];
   initialArticles: Article[];
   tab: string;
@@ -16,6 +20,7 @@ type Props = {
   selectedCompany?: number;
 };
 export default function AdminPrototype({
+  live = false,
   initialCompanies,
   initialArticles,
   tab,
@@ -25,12 +30,16 @@ export default function AdminPrototype({
   const [businesses, setBusinesses] = useState(initialCompanies);
   const [stories, setStories] = useState(initialArticles);
   const [query, setQuery] = useState("");
-  const [month, setMonth] = useState("2026-10");
+  const today = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Sao_Paulo", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
+  const [month, setMonth] = useState(today.slice(0, 7));
+  const [saving, setSaving] = useState(false);
+  const router = useRouter();
   const [message, setMessage] = useState("");
   const [preview, setPreview] = useState(false);
   const [previewTitle, setPreviewTitle] = useState("");
   const [previewContent, setPreviewContent] = useState("");
   useEffect(() => {
+    if (live) return;
     try {
       const saved = sessionStorage.getItem("nivelo-demo");
       if (saved) {
@@ -41,7 +50,13 @@ export default function AdminPrototype({
         }
       }
     } catch {}
-  }, []);
+  }, [live]);
+  useEffect(() => {
+    if (live) {
+      setBusinesses(initialCompanies);
+      setStories(initialArticles);
+    }
+  }, [live, initialCompanies, initialArticles]);
   useEffect(() => {
     setMessage("");
     setPreview(false);
@@ -63,12 +78,33 @@ export default function AdminPrototype({
   const currentArticle = stories.find((a) => a.id === editId);
   const monthly = monthlyCounts(businesses, stories, month);
   const complete = monthly.filter((c) => c.count >= 2).length;
-  function save(
+  async function save(
     event: React.FormEvent<HTMLFormElement>,
     kind: "empresa" | "artigo",
   ) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    if (saving) return;
+    if (live) {
+      setSaving(true);
+      setMessage("");
+      try {
+        const result = await saveRecord(kind, editId, data);
+        if (!result.ok) { setMessage(result.error); return; }
+        if (kind === "empresa") {
+          const record = result.record as Company;
+          setBusinesses((items) => editId ? items.map((c) => c.id === editId ? record : c) : [...items, record]);
+        } else {
+          const record = result.record as Article;
+          setStories((items) => editId ? items.map((a) => a.id === editId ? record : a) : [...items, record]);
+        }
+        router.push(`/admin?aba=${kind === "empresa" ? "empresas" : "artigos"}`);
+        router.refresh();
+      } catch {
+        setMessage("Não foi possível salvar. Confira sua conexão e, se necessário, entre novamente no painel.");
+      } finally { setSaving(false); }
+      return;
+    }
     const get = (k: string) => String(data.get(k) || "").trim();
     if (kind === "empresa") {
       const name = get("name");
@@ -88,7 +124,7 @@ export default function AdminPrototype({
         email: get("email"),
         website: safeUrl(get("website")),
         image: safeImage(get("image")) || "/placeholder.svg",
-        gallery: "",
+        gallery: get("gallery"),
         status: get("status"),
       };
       persist(
@@ -159,8 +195,9 @@ export default function AdminPrototype({
           Um espaço para organizar boas histórias.
           <br />
           <br />
-          Protótipo visual — sem autenticação e sem banco de dados.
+          {live ? "Painel conectado. As publicações aparecem no portal conforme o status e a data." : "Protótipo visual — sem autenticação e sem banco de dados."}
         </p>
+        {live && <form action={signOut}><button className="button">Sair da conta →</button></form>}
       </aside>
       <div className="admin-main">
         <div className="admin-heading">
@@ -191,7 +228,7 @@ export default function AdminPrototype({
                     : "Dê forma ao próximo encontro."}
             </p>
           </div>
-          <span className="prototype-badge">MODO DEMONSTRAÇÃO</span>
+          <span className="prototype-badge">{live ? "PAINEL EDITORIAL" : "MODO DEMONSTRAÇÃO"}</span>
         </div>
         {message && (
           <div className="notice" role="status">
@@ -213,14 +250,7 @@ export default function AdminPrototype({
               <div className="stat">
                 <span>Conteúdos publicados no mês</span>
                 <strong>
-                  {stories
-                    .filter(
-                      (a) =>
-                        a.status === "published" &&
-                        a.published_at.startsWith(month),
-                    )
-                    .length.toString()
-                    .padStart(2, "0")}
+                  {monthly.reduce((total, company) => total + company.count, 0).toString().padStart(2, "0")}
                 </strong>
                 <small>Meta: {businesses.length * 2} histórias</small>
               </div>
@@ -476,6 +506,7 @@ export default function AdminPrototype({
                 label="URL da imagem de capa"
                 value={currentCompany?.image}
               />
+              <Field name="gallery" label="Galeria de fotos" value={currentCompany?.gallery} multiline wide note="Até 10 URLs de imagens, uma por linha." />
               <label>
                 Status
                 <select
@@ -483,18 +514,19 @@ export default function AdminPrototype({
                   defaultValue={currentCompany?.status || "draft"}
                 >
                   <option value="draft">Rascunho</option>
-                  <option value="published">Publicada (simulação)</option>
+                  <option value="published">{live ? "Publicada" : "Publicada (simulação)"}</option>
                 </select>
               </label>
             </div>
             <div className="form-actions">
-              <p>As alterações são apenas uma simulação local.</p>
-              <button className="button">Salvar demonstração →</button>
+              <p>{live ? "Ao publicar, a empresa fica disponível no portal." : "As alterações são apenas uma simulação local."}</p>
+              <button className="button" disabled={saving}>{saving ? "Salvando…" : live ? "Salvar →" : "Salvar demonstração →"}</button>
             </div>
           </form>
         )}
         {tab === "artigo" && (
           <form key={`article-${editId}`} onSubmit={(e) => save(e, "artigo")}>
+            {!businesses.length && <p className="notice">Cadastre uma empresa antes de criar uma matéria. <Link href="/admin?aba=empresa">Cadastrar empresa →</Link></p>}
             <div className="editor-tabs">
               <button
                 type="button"
@@ -596,7 +628,7 @@ export default function AdminPrototype({
                 name="published_at"
                 label="Data de publicação"
                 value={
-                  currentArticle?.published_at.slice(0, 10) || "2026-10-05"
+                  currentArticle?.published_at.slice(0, 10) || today
                 }
                 type="date"
                 required
@@ -625,7 +657,7 @@ export default function AdminPrototype({
                   defaultValue={currentArticle?.status || "draft"}
                 >
                   <option value="draft">Rascunho</option>
-                  <option value="published">Publicado (simulação)</option>
+                  <option value="published">{live ? "Publicado" : "Publicado (simulação)"}</option>
                 </select>
               </label>
             </div>
@@ -645,12 +677,12 @@ export default function AdminPrototype({
               </div>
             )}
             <div className="form-actions">
-              <p>A publicação real será conectada ao Supabase depois.</p>
-              <button className="button">Salvar demonstração →</button>
+              <p>{live ? "A matéria aparece no portal quando a empresa estiver publicada e a data chegar. Datas usam o horário de Brasília." : "A publicação real será conectada ao Supabase depois."}</p>
+              <button className="button" disabled={saving || !businesses.length}>{saving ? "Salvando…" : live ? "Salvar →" : "Salvar demonstração →"}</button>
             </div>
           </form>
         )}
-        <p className="small-muted" style={{ marginTop: 35 }}>
+        {!live && <p className="small-muted" style={{ marginTop: 35 }}>
           Demonstração visual · alterações duram apenas nesta aba ·{" "}
           <button
             type="button"
@@ -669,7 +701,7 @@ export default function AdminPrototype({
           >
             Restaurar exemplos
           </button>
-        </p>
+        </p>}
       </div>
     </div>
   );

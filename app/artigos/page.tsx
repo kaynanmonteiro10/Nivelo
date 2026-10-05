@@ -1,4 +1,4 @@
-import { articles, companies } from "@/lib/data";
+import { articles, companies } from "@/lib/content";
 import { searchArticles } from "@/lib/discovery";
 import { ArticleCard } from "../components";
 import Link from "next/link";
@@ -13,12 +13,12 @@ export default async function Stories({
   searchParams: Promise<Record<string, string | undefined>>;
 }) {
   const p = await searchParams;
-  const all = articles();
+  const all = await articles();
   const categories = [...new Set(all.map((a) => a.category))];
   const filtered = searchArticles(all, p.q, {
     category: p.categoria,
     kind: p.tipo,
-    companies: companies(),
+    companies: await companies(),
   });
   return (
     <div className="wrap page-space article-directory">

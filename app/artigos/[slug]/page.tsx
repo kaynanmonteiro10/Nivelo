@@ -1,9 +1,10 @@
+import { isLive } from "@/lib/supabase/config";
 import { siteUrl } from "@/lib/site";
 import Link from "next/link";
 import { relatedArticles, articleKind } from "@/lib/discovery";
 import { contentBlocks } from "@/lib/editorial.mjs";
 import { notFound } from "next/navigation";
-import { articleBySlug, companies, articles } from "@/lib/data";
+import { articleBySlug, companies, articles } from "@/lib/content";
 import {
   Paragraphs,
   JsonLd,
@@ -17,7 +18,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const a = articleBySlug(slug);
+  const a = await articleBySlug(slug);
   return a
     ? {
         title: a.title,
@@ -38,13 +39,13 @@ export default async function ArticlePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const a = articleBySlug(slug);
+  const a = await articleBySlug(slug);
   if (!a) notFound();
   const sections = contentBlocks(a.content).filter(
     (block) => block.type === "heading",
   );
-  const c = companies().find((c) => c.id === a.company_id);
-  const related = relatedArticles(a, articles());
+  const c = (await companies()).find((c) => c.id === a.company_id);
+  const related = relatedArticles(a, await articles());
   return (
     <>
       <JsonLd
@@ -79,7 +80,7 @@ export default async function ArticlePage({
           </Link>
           <div className="article-format">
             <span>{articleKind(a)}</span>
-            <span>Conteúdo de demonstração</span>
+            {!isLive() && <span>Conteúdo de demonstração</span>}
           </div>
           <h1>{a.title}</h1>
           <p>{a.excerpt}</p>
@@ -128,9 +129,7 @@ export default async function ArticlePage({
             <div className="editorial-disclosure">
               <span className="eyebrow">SOBRE ESTE CONTEÚDO</span>
               <p>
-                Exemplo editorial da Nivelo relacionado ao universo de {c?.name}
-                . Empresa fictícia do portal. Notícias e entrevistas são
-                ilustrativas; guias têm finalidade informativa.
+                {isLive() ? <>Conteúdo da Nivelo relacionado ao universo de {c?.name}. A empresa participa do portal e seu vínculo com esta matéria é identificado.</> : <>Exemplo editorial da Nivelo relacionado ao universo de {c?.name}. Empresa fictícia do portal. Notícias e entrevistas são ilustrativas; guias têm finalidade informativa.</>}
               </p>
             </div>
           </article>

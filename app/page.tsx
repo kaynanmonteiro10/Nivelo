@@ -1,6 +1,7 @@
+import { isLive } from "@/lib/supabase/config";
 import Link from "next/link";
 import { PersonalizedNews } from "./personalization";
-import { articles, companies } from "@/lib/data";
+import { articles, companies } from "@/lib/content";
 import {
   latestArticles,
   selectHighlights,
@@ -9,9 +10,9 @@ import {
 } from "@/lib/discovery";
 import { StoryMeta, ArticleCard } from "./components";
 export const dynamic = "force-dynamic";
-export default function Home() {
-  const all = articles();
-  const businesses = companies();
+export default async function Home() {
+  const all = await articles();
+  const businesses = await companies();
   const highlights = selectHighlights(all);
   const featured = highlights[0];
   const used = new Set(highlights.map((a) => a.id));
@@ -20,15 +21,15 @@ export default function Home() {
   remaining.forEach((a) =>
     reserved.set(a.category, (reserved.get(a.category) || 0) + 1),
   );
-  const latest = remaining
+  const latest = (all.length <= 8 ? remaining : remaining
     .filter((a) => {
       if ((reserved.get(a.category) || 0) <= 1) return false;
       reserved.set(a.category, (reserved.get(a.category) || 0) - 1);
       return true;
     })
-    .slice(0, 4);
+    ).slice(0, 4);
   latest.forEach((a) => used.add(a.id));
-  const categories = [...new Set(businesses.map((c) => c.category))];
+  const categories = [...new Set([...businesses.map((c) => c.category), ...all.map((a) => a.category)])];
   const sections = categories.map((category) => ({
     category,
     stories: latestArticles(all)
@@ -63,10 +64,11 @@ export default function Home() {
           Todas as editorias →
         </Link>
       </nav>
-      <p className="demo-strip">
+      {!isLive() && <p className="demo-strip">
         <span>EDIÇÃO DEMONSTRATIVA</span> Empresas, novidades e entrevistas
         fictícias para apresentar o portal.
-      </p>
+      </p>}
+      {!all.length && <p className="notice">As primeiras publicações estão a caminho. Enquanto isso, explore as empresas do portal.</p>}
       {featured && (
         <section className="news-lead" aria-label="Manchetes">
           <article className="main-headline">

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { contentBlocks } from "@/lib/editorial.mjs";
 import { articleKind, shortDate } from "@/lib/discovery";
-import { companies } from "@/lib/data";
+import { companies } from "@/lib/content";
 import type { Article, Company } from "@/lib/data";
 export function ArticleCard({
   article,
@@ -124,8 +124,8 @@ export function Paragraphs({ text }: { text: string }) {
   );
 }
 
-export function StoryMeta({ article }: { article: Article }) {
-  const company = companies().find((c) => c.id === article.company_id);
+export async function StoryMeta({ article }: { article: Article }) {
+  const company = (await companies()).find((c) => c.id === article.company_id);
   return (
     <div className="story-meta">
       <span>{article.author}</span>

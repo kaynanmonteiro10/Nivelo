@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { articles, companies } from "@/lib/data";
+import { articles, companies } from "@/lib/content";
 import { searchArticles, searchCompanies } from "@/lib/discovery";
 import { ArticleCard, CompanyCard } from "../components";
 export const metadata = {
@@ -13,9 +13,9 @@ export default async function Search({
 }) {
   const p = await searchParams;
   const q = p.q?.trim() || "";
-  const businesses = companies();
+  const businesses = await companies();
   const stories = q
-    ? searchArticles(articles(), q, { companies: businesses })
+    ? searchArticles(await articles(), q, { companies: businesses })
     : [];
   const results = q ? searchCompanies(businesses, q) : [];
   return (

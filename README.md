@@ -1,6 +1,6 @@
 # Nivelo
 
-Protótipo visual de um portal editorial de empresas, em Next.js, React e TypeScript.
+Portal editorial de empresas, em Next.js, React e TypeScript, com demonstração local e integração opcional com Supabase.
 
 ## Desenvolvimento
 
@@ -24,7 +24,7 @@ npm run dev
 
 Os exemplos estão em `lib/data.ts`. As empresas, endereços e conteúdos são fictícios. Os formulários administrativos simulam alterações apenas no `sessionStorage` da aba; não alteram o portal público. Restaurar exemplos limpa a simulação.
 
-Não há backend, autenticação ou integração com Supabase nesta etapa. O administrativo é uma demonstração pública. Na próxima etapa, os dados e a autenticação poderão ser conectados ao Supabase e o projeto publicado na Vercel.
+A integração com Supabase inclui login administrativo, autorização por conta, cadastro/edição de empresas e matérias, rascunhos e publicações com data. Sem configuração, o administrativo continua como demonstração pública. Para ativar o banco, criar a primeira conta e configurar a Vercel, siga [docs/SUPABASE.md](docs/SUPABASE.md). O portal não mistura exemplos com o banco real e não usa chaves secretas de administração.
 
 Fontes e fotos são servidas localmente. Créditos das fotos em `public/images/CREDITS.md`.
 
@@ -40,9 +40,9 @@ A busca integrada fica em `/buscar`. Ela considera todas as palavras relevantes 
 
 O visitante ativa a personalização no bloco “Para você”. As últimas 20 matérias lidas, por até 30 dias, ficam no `localStorage` do navegador; esse histórico não é enviado a um servidor. Recomendações priorizam os assuntos lidos mais recentemente, evitam repetir matérias já lidas e procuram variar editorias. É possível pausar e limpar o histórico. Não há personalização entre dispositivos ou contas nesta etapa.
 
-No protótipo administrativo, os campos de formato, etiquetas e prioridade de capa são simulados na aba, como os demais campos; não alteram a capa pública. A integração desses controles com conteúdo persistido fica para a etapa do Supabase.
+No modo de demonstração, os campos de formato, etiquetas e prioridade de capa são simulados na aba e não alteram a capa pública. Com o Supabase ativado, esses campos são persistidos e usados pelos algoritmos do portal. O calendário mensal conta publicações efetivas, exclui datas futuras e usa o mês no horário de Brasília.
 
-`npm test` executa os testes dos algoritmos e da separação entre subtítulos e parágrafos. Use Node.js 22.18+ ou 24 para executar os testes TypeScript diretamente.
+`npm test` executa os testes dos algoritmos, da separação entre subtítulos e parágrafos, da validação administrativa e da contagem editorial mensal. Use Node.js 22.18+ ou 24 para executar os testes TypeScript diretamente.
 
 URLs de SEO usam `SITE_URL`, o domínio de produção informado pela Vercel ou o endereço atual da Nivelo, nessa ordem.
 

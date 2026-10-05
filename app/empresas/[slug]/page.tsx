@@ -1,7 +1,7 @@
 import { siteUrl } from "@/lib/site";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { companyBySlug, articles } from "@/lib/data";
+import { companyBySlug, articles } from "@/lib/content";
 import {
   ArticleCard,
   JsonLd,
@@ -14,7 +14,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const c = companyBySlug(slug);
+  const c = await companyBySlug(slug);
   return c
     ? {
         title: `${c.name} — ${c.category} em ${c.city}`,
@@ -30,9 +30,9 @@ export default async function CompanyPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const c = companyBySlug(slug);
+  const c = await companyBySlug(slug);
   if (!c) notFound();
-  const related = articles().filter((a) => a.company_id === c.id);
+  const related = (await articles()).filter((a) => a.company_id === c.id);
   return (
     <>
       <JsonLd

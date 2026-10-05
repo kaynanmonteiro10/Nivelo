@@ -1,5 +1,5 @@
 import { searchCompanies } from "@/lib/discovery";
-import { companies } from "@/lib/data";
+import { companies } from "@/lib/content";
 import { CompanyCard } from "../components";
 import Link from "next/link";
 export const metadata = {
@@ -13,7 +13,7 @@ export default async function Directory({
   searchParams: Promise<Record<string, string | undefined>>;
 }) {
   const p = await searchParams;
-  const all = companies();
+  const all = await companies();
   const categories = [...new Set(all.map((c) => c.category))];
   const filtered = searchCompanies(all, p.q, {
     category: p.categoria,

@@ -4071,3 +4071,28 @@ select {
 .button.light:hover {
   color: var(--ink);
 }
+.admin-login {
+  max-width: 480px;
+  margin: 30px auto 70px;
+}
+.admin-login h1 {
+  margin: 18px 0;
+  font-size: clamp(28px, 5vw, 42px);
+  line-height: 1.15;
+}
+.admin-login > p {
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 26px;
+}
+.admin-login .form-grid {
+  margin: 26px 0;
+}
+.button:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+.notice[role="alert"] {
+  background: var(--pending-bg);
+  color: var(--pending-ink);
+}
